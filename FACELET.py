@@ -3,7 +3,7 @@ import numpy as np
 import streamlit as st
 
 # Título de la aplicación
-st.title("Encontrar Números Faltantes para lucho alfonso😂")
+st.title("Encontrar Números Faltantes para lucho alfonso y wilmer😂")
 
 # Cargar el archivo Excel
 archivo_excel = st.file_uploader("Cargar archivo Excel", type=["xlsx"])
