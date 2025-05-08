@@ -10,8 +10,8 @@ archivo_excel = st.file_uploader("Cargar archivo Excel", type=["xlsx"])
 
 # Definir los rangos para cada prefijo
 rangos = {
-    'RCGS': (4737202, 4750566),  # Rango para RCGS
-    'REAR': (1663791, 1665336)    # Rango para REAR
+    'RCGS': (4419305, 4436157),  # Rango para RCGS
+    'REAR': (1627307, 1629068)    # Rango para REAR
 }
 
 # Función para encontrar los números secuenciales faltantes en un rango específico
