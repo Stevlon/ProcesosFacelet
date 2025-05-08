@@ -5,14 +5,24 @@ import streamlit as st
 # Título de la aplicación
 st.title("Encontrar Números Faltantes para lucho alfonso y wilmer😂")
 
-# Cargar el archivo Excel
-archivo_excel = st.file_uploader("Cargar archivo Excel", type=["xlsx"])
+# Inicializar el diccionario de rangos vacío
+rangos = {}
 
-# Definir los rangos para cada prefijo
-rangos = {
-    'RCGS': (4419305, 4436157),  # Rango para RCGS
-    'REAR': (1627307, 1629068)    # Rango para REAR
-}
+# Solicitar rangos manualmente
+st.sidebar.header("Configuración de Rangos")
+st.sidebar.write("Por favor, ingrese los rangos para cada prefijo")
+
+# Solicitar rangos para RCGS
+st.sidebar.subheader("Rango RCGS")
+inicio_rcgs = st.sidebar.number_input("Inicio RCGS", value=0, step=1)
+fin_rcgs = st.sidebar.number_input("Fin RCGS", value=0, step=1)
+rangos['RCGS'] = (inicio_rcgs, fin_rcgs)
+
+# Solicitar rangos para REAR
+st.sidebar.subheader("Rango REAR")
+inicio_rear = st.sidebar.number_input("Inicio REAR", value=0, step=1)
+fin_rear = st.sidebar.number_input("Fin REAR", value=0, step=1)
+rangos['REAR'] = (inicio_rear, fin_rear)
 
 # Función para encontrar los números secuenciales faltantes en un rango específico
 def encontrar_faltantes(grupo, inicio, fin):
@@ -20,6 +30,9 @@ def encontrar_faltantes(grupo, inicio, fin):
     all_numbers = np.arange(inicio, fin + 1)
     faltantes = np.setdiff1d(all_numbers, grupo)
     return faltantes.tolist()
+
+# Cargar el archivo Excel
+archivo_excel = st.file_uploader("Cargar archivo Excel", type=["xlsx"])
 
 # Si se carga un archivo
 if archivo_excel is not None:
@@ -29,22 +42,13 @@ if archivo_excel is not None:
     resultados = {}
     for Prefijo, grupo in df.groupby('Prefijo')['Nro. Factura']:
         rango_inicio, rango_fin = rangos.get(Prefijo, (None, None))
-        if rango_inicio is not None and rango_fin is not None:
+        if rango_inicio is not None and rango_fin is not None and rango_inicio > 0 and rango_fin > 0:
             faltantes = encontrar_faltantes(grupo.values, rango_inicio, rango_fin)
             if faltantes:
                 resultados[Prefijo] = faltantes
-
-    # Mostrar resultados
-    st.write("Resultados:")
-    for prefijo, faltantes in resultados.items():
-        st.write(f"Total de números faltantes para el prefijo {prefijo}: {len(faltantes)}")
-        st.write(f"Números faltantes: {faltantes}")
-    if len(faltantes) == 0:
-        st.write(f"Sin diferencias para {prefijo}")
-
-# Opción para especificar rangos manualmente
-st.sidebar.header("Especificar Rangos")
-for prefijo in rangos.keys():
-    inicio = st.sidebar.number_input(f"Inicio para {prefijo}", value=rangos[prefijo][0])
-    fin = st.sidebar.number_input(f"Fin para {prefijo}", value=rangos[prefijo][1])
-    rangos[prefijo] = (inicio, fin)
+                st.write(f"Total de números faltantes para el prefijo {Prefijo}: {len(faltantes)}")
+                st.write(f"Números faltantes: {faltantes}")
+            else:
+                st.write(f"Sin diferencias para {Prefijo}")
+        else:
+            st.warning(f"No se ha configurado un rango válido para el prefijo {Prefijo}") 
