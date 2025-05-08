@@ -39,6 +39,8 @@ if archivo_excel is not None:
     for prefijo, faltantes in resultados.items():
         st.write(f"Total de números faltantes para el prefijo {prefijo}: {len(faltantes)}")
         st.write(f"Números faltantes: {faltantes}")
+    if len(faltantes) == 0:
+        st.write(f"Sin diferencias para {prefijo}")
 
 # Opción para especificar rangos manualmente
 st.sidebar.header("Especificar Rangos")
