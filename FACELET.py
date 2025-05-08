@@ -47,7 +47,11 @@ if archivo_excel is not None:
             if faltantes:
                 resultados[Prefijo] = faltantes
                 st.write(f"Total de números faltantes para el prefijo {Prefijo}: {len(faltantes)}")
-                st.write(f"Números faltantes: {faltantes}")
+                #st.write(f"Números faltantes: {faltantes}")
+                if len(faltantes) > 1000:
+                    st.write(f"Números faltantes: Excede el rango limite para mostrar los secuenciales")
+                else:
+                    st.write(f"Números faltantes: {faltantes}")
             else:
                 st.write(f"Sin diferencias para {Prefijo}")
         else:
