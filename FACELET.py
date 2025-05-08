@@ -46,9 +46,9 @@ if archivo_excel is not None:
             faltantes = encontrar_faltantes(grupo.values, rango_inicio, rango_fin)
             if faltantes:
                 resultados[Prefijo] = faltantes
-                st.write(f"Total de números faltantes para el prefijo {Prefijo}: {len(faltantes)}")
+                st.info(f"Total de números faltantes para el prefijo {Prefijo}: {len(faltantes)}")
                 #st.write(f"Números faltantes: {faltantes}")
-                if len(faltantes) > 1000:
+                if len(faltantes) > 1500:
                     st.warning(f"Números faltantes: Excede el rango limite para mostrar los secuenciales")
                 else:
                     st.write(f"Números faltantes: {faltantes}")
