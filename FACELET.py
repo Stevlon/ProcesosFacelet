@@ -53,6 +53,6 @@ if archivo_excel is not None:
                 else:
                     st.write(f"Números faltantes: {faltantes}")
             else:
-                st.write(f"Sin diferencias para {Prefijo}")
+                st.info(f"Sin diferencias para {Prefijo}")
         else:
             st.warning(f"No se ha configurado un rango válido para el prefijo {Prefijo}") 
